@@ -1,0 +1,27 @@
+{
+  "name": "darkMode",
+  "colors":
+  {
+    "text": "#000000",
+    "background":"#000",
+    "backgroundDark":"#000000",
+    "buttonDefault":"#333333",
+    "buttonTextDefault":"#FFFFFF",
+    "shadow":"#000",
+    "errorBackground":"#000000",
+    "errorText":"#EE0000",
+    "defaultBorder":"#000000",
+    "divider":"#34495e",
+
+    "chat": {
+      "chatText": "#000000",
+      "selfPlayerName":"#EE00EE",
+      "otherPlayerName": "#FAFAD2",
+      "itemFiller":"#00EEEE",
+      "itemNeverExclude": "#6D8BE8",
+      "itemProgression": "#AF99EF",
+      "itemTrap": "#FA8072",
+      "location":"#00D168"
+    }
+  }
+}

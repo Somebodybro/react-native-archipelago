@@ -7,7 +7,8 @@ import {
   ViewStyle,
 } from "react-native";
 
-import commonStyles from "../styles/CommonStyles";
+import getCommonStyles from "../styles/CommonStyles";
+import { useStyles } from "../styles/useStyles";
 
 export default function Button({
   onPress,
@@ -30,6 +31,7 @@ export default function Button({
   endIcon?: ReactNode | ReactNode[];
   removeText?: boolean;
 }>) {
+  const commonStyles = useStyles(getCommonStyles);
   return (
     <TouchableHighlight
       style={{ ...commonStyles.touchableHighlightButton, ...buttonStyle }}

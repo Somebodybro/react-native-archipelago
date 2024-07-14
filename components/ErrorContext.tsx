@@ -4,7 +4,8 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 import { Text, View } from "react-native";
 
 import Button from "./Button";
-import errorStyles from "../styles/ErrorStyles";
+import getErrorStyles from "../styles/ErrorStyles";
+import { useStyles } from "../styles/useStyles";
 
 /**
  * Used to get the get and set the error from the context using useContext(ErrorContext)
@@ -61,6 +62,7 @@ export function ErrorMessage() {
   const { error, setError } = useContext(ErrorContext);
   const errorString = composeError(error);
   console.log(errorString);
+  const errorStyles = useStyles(getErrorStyles);
   return (
     <>
       {!!error && (

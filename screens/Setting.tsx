@@ -19,8 +19,10 @@ import Button from "../components/Button";
 import { ClientContext } from "../components/ClientContext";
 import { ErrorContext } from "../components/ErrorContext";
 import Popup from "../components/Popup";
-import commonStyles from "../styles/CommonStyles";
-import settingsStyles from "../styles/settingsStyles";
+import getCommonStyles from "../styles/CommonStyles";
+import getSettingsStyles from "../styles/settingsStyles";
+import ThemeContext, { Theme, defaultThemes } from "../styles/theme";
+import { useStyles } from "../styles/useStyles";
 import {
   STORAGE_TYPES,
   getAllNames,
@@ -46,10 +48,14 @@ const ListItem = ({
 }) => {
   let fontSize = 20;
   if (item.length > 30) fontSize = 15;
+  const theme = useContext(ThemeContext);
+  const Colors = theme.theme.colors;
+  const settingsStyles = useStyles(getSettingsStyles);
+
   return (
     <TouchableHighlight
       activeOpacity={0.6}
-      underlayColor="#DDDDDD"
+      underlayColor={Colors.background}
       style={settingsStyles.item}
       onPress={() => {
         connectToAp(item);
@@ -98,6 +104,10 @@ export default function Settings({
     originalName: "",
     newName: "",
   });
+  const settingsStyles = useStyles(getSettingsStyles);
+  const commonStyles = useStyles(getCommonStyles);
+  const theme = useContext(ThemeContext);
+
   const client = useContext(ClientContext);
   const { setError } = useContext(ErrorContext);
 
@@ -290,6 +300,25 @@ export default function Settings({
               )}
               onRefresh={fetchStorage}
               refreshing={loading}
+            />
+          </View>
+          <Text style={commonStyles.inputLabel}>Theme settings</Text>
+          <View
+            style={{
+              width: Dimensions.get("screen").width - 5,
+            }}
+          >
+            <Button
+              onPress={() => {
+                let themeToSetTo: Theme;
+                if (theme.theme.name === "lightMode") {
+                  themeToSetTo = defaultThemes.darkMode;
+                } else {
+                  themeToSetTo = defaultThemes.lightMode;
+                }
+                theme.setTheme(themeToSetTo);
+              }}
+              text="Toggle darkmode"
             />
           </View>
         </View>

@@ -11,6 +11,7 @@ import ClientContextProvider from "./components/ClientContext";
 import ErrorContextProvider, { ErrorMessage } from "./components/ErrorContext";
 import ConnectTabs from "./screens/ConnectTabs";
 import Connected from "./screens/Connected";
+import { ThemeProvider } from "./styles/theme";
 require("react-native-get-random-values");
 
 const Stack = createNativeStackNavigator();
@@ -22,18 +23,20 @@ function App() {
     <SafeAreaProvider>
       <ErrorContextProvider>
         <ClientContextProvider>
-          <View style={{ flex: 15 }}>
-            <NavigationContainer>
-              <Stack.Navigator
-                initialRouteName="connect"
-                screenOptions={{ header: EmptyHeader }}
-              >
-                <Stack.Screen name="connect" component={ConnectTabs} />
-                <Stack.Screen name="connected" component={Connected} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </View>
-          <ErrorMessage />
+          <ThemeProvider>
+            <View style={{ flex: 15 }}>
+              <NavigationContainer>
+                <Stack.Navigator
+                  initialRouteName="connect"
+                  screenOptions={{ header: EmptyHeader }}
+                >
+                  <Stack.Screen name="connect" component={ConnectTabs} />
+                  <Stack.Screen name="connected" component={Connected} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </View>
+            <ErrorMessage />
+          </ThemeProvider>
         </ClientContextProvider>
       </ErrorContextProvider>
     </SafeAreaProvider>

@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import { Modal, View } from "react-native";
 
-import commonStyles from "../styles/CommonStyles";
+import getCommonStyles from "../styles/CommonStyles";
+import { useStyles } from "../styles/useStyles";
 
 export default function Popup({
   visible,
@@ -12,6 +13,7 @@ export default function Popup({
   closePopup: () => void;
   children?: ReactNode | ReactNode[];
 }>) {
+  const commonStyles = useStyles(getCommonStyles);
   return (
     <Modal
       animationType="slide"

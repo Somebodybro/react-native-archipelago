@@ -4,9 +4,10 @@ import { ScrollView, Text, TextInput, View } from "react-native";
 
 import Button from "../components/Button";
 import { ClientContext } from "../components/ClientContext";
-import chatStyles from "../styles/ChatStyles";
-import Colors from "../styles/Colors";
-import commonStyles from "../styles/CommonStyles";
+import getChatStyles from "../styles/ChatStyles";
+import getCommonStyles from "../styles/CommonStyles";
+import ThemeContext from "../styles/theme";
+import { useStyles } from "../styles/useStyles";
 
 export type messages =
   | any[]
@@ -40,29 +41,36 @@ const ChatLine = memo(
     }[];
     index: number;
   }) => {
+    const Colors = useContext(ThemeContext).theme.colors;
+    const chatStyles = useStyles(getChatStyles);
+
     const msgPart = message[0];
     const restOfMessage = message.slice(1);
     let style = chatStyles.message;
     switch (msgPart.type) {
       case "player":
-        if (msgPart.selfPlayer) style = { ...style, color: Colors.magenta };
-        else style = { ...style, color: Colors.yellow };
+        if (msgPart.selfPlayer)
+          style = { ...style, color: Colors.chat.selfPlayerName };
+        else style = { ...style, color: Colors.chat.otherPlayerName };
         break;
       case "item":
         if (msgPart.itemType === ITEM_FLAGS.FILLER)
-          style = { ...style, color: Colors.cyan };
+          style = { ...style, color: Colors.chat.itemFiller };
         else if (msgPart.itemType === ITEM_FLAGS.NEVER_EXCLUDE)
-          style = { ...style, color: Colors.slateblue };
+          style = { ...style, color: Colors.chat.itemNeverExclude };
         else if (msgPart.itemType === ITEM_FLAGS.PROGRESSION)
-          style = { ...style, color: Colors.plum };
+          style = { ...style, color: Colors.chat.itemProgression };
         else if (msgPart.itemType === ITEM_FLAGS.TRAP)
-          style = { ...style, color: Colors.salmon };
+          style = { ...style, color: Colors.chat.itemTrap };
         break;
       case "location":
-        style = { ...style, color: Colors.green };
+        style = { ...style, color: Colors.chat.location };
         break;
       case "color":
-        style = { ...style, color: msgPart.color ? msgPart.color : "black" };
+        style = {
+          ...style,
+          color: msgPart.color ? msgPart.color : Colors.chat.chatText,
+        };
         break;
       default:
         break;
@@ -84,6 +92,10 @@ export default function Chat({
   messages: messages;
 }>) {
   const [chat, setChat] = useState("");
+
+  const chatStyles = useStyles(getChatStyles);
+  const commonStyles = useStyles(getCommonStyles);
+
   const client = useContext(ClientContext);
   const chatBoxRef = useRef<ScrollView>(null);
   const sendMessage = () => {

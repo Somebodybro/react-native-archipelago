@@ -1,6 +1,6 @@
 import { MaterialTopTabNavigationHelpers } from "@react-navigation/material-top-tabs/lib/typescript/src/types";
 import { ConnectionInformation, ITEMS_HANDLING_FLAGS } from "archipelago.js";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -8,8 +8,9 @@ import Button from "../components/Button";
 import { ClientContext } from "../components/ClientContext";
 import { ErrorContext } from "../components/ErrorContext";
 import Popup from "../components/Popup";
-import commonStyles from "../styles/CommonStyles";
-import mainStyles from "../styles/MainStyles";
+import getCommonStyles from "../styles/CommonStyles";
+import getMainStyles from "../styles/MainStyles";
+import { useStyles } from "../styles/useStyles";
 import { STORAGE_TYPES, getAllNames, save } from "../utils/storageHandler";
 
 export type apInfo = {
@@ -48,6 +49,7 @@ export function ApInformation({
   const [portString, setPortString] = useState(
     savedInfo?.port.toString() ?? "",
   );
+  const commonStyles = useStyles(getCommonStyles);
   return (
     <>
       <View>
@@ -126,6 +128,13 @@ export default function Connect({
   const [modalVisible, setModalVisible] = useState(false);
   const [sessionName, setSessionName] = useState("");
   const [infoToSave, setInfoToSave] = useState({});
+  const mainStyles = useStyles(getMainStyles);
+  const commonStyles = useStyles(getCommonStyles);
+
+  useEffect(() => {
+    console.log(mainStyles);
+    console.log(commonStyles);
+  }, [mainStyles, commonStyles]);
 
   const connect = () => {
     navigation.navigate("connected");

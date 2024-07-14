@@ -7,7 +7,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Chat, { messages } from "./chat";
 import { ClientContext } from "../components/ClientContext";
-import { ErrorContext } from "../components/ErrorContext";
 
 const Tab = createMaterialTopTabNavigator();
 
